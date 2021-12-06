@@ -27,6 +27,7 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
+// MyHomePageクラスから継承
 class _MyHomePageState extends State<MyHomePage> {
   // getter method
   final _hourController = TextEditingController();
@@ -97,6 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     controller: _minController,
+
                   ),
                 ),
                 const Text(
@@ -154,7 +156,6 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () => {
           print("フローティングアクションボタンをクリック"),
           _calcTimeToSec(
-
               hour: int.parse(_hourController.text),
               min: int.parse(_minController.text),
               sec: int.parse(_secController.text),
@@ -165,3 +166,5 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 }
+
+
