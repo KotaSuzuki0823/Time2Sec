@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import './textform.dart';
 
 void main() => runApp(MyApp());
 
@@ -76,55 +77,9 @@ class _MyHomePageState extends State<MyHomePage> {
                   child: Container(
                   ),
                 ),
-                Expanded(
-                    flex: 2,
-                    child: TextField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    controller: _hourController,
-                  ),
-                ),
-                const Text(
-                  'hour'
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    controller: _minController,
-
-                  ),
-                ),
-                const Text(
-                    'min'
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                  ),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                    controller: _secController,
-                  ),
-                ),
-                const Text(
-                    'sec'
-                ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                  ),
-                ),
+                NumberFormField(context, title: 'hour'),
+                NumberFormField(context, title: 'min'),
+                NumberFormField(context, title: 'sec'),
               ],
             ),
            Container(
