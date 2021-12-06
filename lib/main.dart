@@ -29,16 +29,21 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   // getter method
-  get _hourController => TextEditingController();
-  get _minController => TextEditingController();
-  get _secController => TextEditingController();
+  final _hourController = TextEditingController();
+  final _minController = TextEditingController();
+  final _secController = TextEditingController();
 
   int _result = 0;
 
-  void _calcTimeToSec() {
+  void _calcTimeToSec({required int hour, required int min, required int sec}) {
     setState(() {
-      //計算
-      _result = (int.parse(_hourController.text) * 3600) + (int.parse(_minController.text) * 60) + int.parse(_secController.text);
+      //int _hour = int.parse(_hourController.text);
+      //int _min = int.parse(_minController.text);
+      //int _sec = int.parse(_secController.text);
+
+      //calc
+      _result = (hour * 3600) + (min * 60) + sec;
+      print('_result : ' + _result.toString());
     });
   }
 
@@ -145,8 +150,16 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _calcTimeToSec,
-        tooltip: 'Increment',
+        tooltip: 'Calc time',
+        onPressed: () => {
+          print("フローティングアクションボタンをクリック"),
+          _calcTimeToSec(
+
+              hour: int.parse(_hourController.text),
+              min: int.parse(_minController.text),
+              sec: int.parse(_secController.text),
+          ),
+        },
         child: const Icon(Icons.refresh),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
