@@ -66,6 +66,12 @@ class _MyHomePageState extends State<MyHomePage> {
             Row(
               children: <Widget>[
                 Expanded(
+                  flex: 1,
+                  child: Container(
+                  ),
+                ),
+                Expanded(
+                    flex: 2,
                     child: TextField(
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -73,10 +79,16 @@ class _MyHomePageState extends State<MyHomePage> {
                   ),
                 ),
                 const Text(
-                  'Hour'
+                  'hour'
                 ),
                 Expanded(
-                child: TextField(
+                  flex: 1,
+                  child: Container(
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: TextField(
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                     controller: _minController,
@@ -86,6 +98,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     'min'
                 ),
                 Expanded(
+                  flex: 1,
+                  child: Container(
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
                   child: TextField(
                     keyboardType: TextInputType.number,
                     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -95,8 +113,16 @@ class _MyHomePageState extends State<MyHomePage> {
                 const Text(
                     'sec'
                 ),
+                Expanded(
+                  flex: 1,
+                  child: Container(
+                  ),
+                ),
               ],
             ),
+           Container(
+             height: 50,
+           ),
             ElevatedButton(
               child: const Text('Clear'),
               style: ElevatedButton.styleFrom(
@@ -108,7 +134,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
               onPressed: _clearField,
             ),
-
+            Container(
+              height: 50,
+            ),
             Text(
               '$_result',
               style: Theme.of(context).textTheme.headline4,
