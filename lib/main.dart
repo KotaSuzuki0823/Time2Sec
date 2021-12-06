@@ -74,12 +74,16 @@ class _MyHomePageState extends State<MyHomePage> {
               children: <Widget>[
                 Expanded(
                   flex: 1,
-                  child: Container(
-                  ),
+                  child: NumberFormField(context, title: 'hour')
                 ),
-                NumberFormField(context, title: 'hour'),
-                NumberFormField(context, title: 'min'),
-                NumberFormField(context, title: 'sec'),
+                Expanded(
+                    flex: 1,
+                    child: NumberFormField(context, title: 'min')
+                ),
+                Expanded(
+                    flex: 1,
+                    child: NumberFormField(context, title: 'sec')
+                ),
               ],
             ),
            Container(
