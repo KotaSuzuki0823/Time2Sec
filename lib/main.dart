@@ -40,23 +40,23 @@ class _MyHomePageState extends State<MyHomePage> {
     setState(() {
       //calc
       _result = (hour * 3600) + (min * 60) + sec;
-      print('_result : ' + _result.toString());
+      debugPrint('_result : ' + _result.toString());
     });
   }
 
   /*全フィールドのクリア*/
   void _clearField() {
     setState(() {
-      this._hourKey.currentState!.reset();
-      this._minKey.currentState!.reset();
-      this._secKey.currentState!.reset();
+      _hourKey.currentState!.reset();
+      _minKey.currentState!.reset();
+      _secKey.currentState!.reset();
       _result = 0;
     });
   }
 
   /*時間入力フォームの単品ウィジェット*/
   Widget _numberFormField({required String title, required GlobalKey<FormFieldState<String>> key}) {
-    final TextEditingController _valueController = TextEditingController(text: '');
+    //final TextEditingController _valueController = TextEditingController(text: '2');
     return Row(
       children: [
         Expanded(
@@ -64,13 +64,13 @@ class _MyHomePageState extends State<MyHomePage> {
           child: Container(),
         ),
         Expanded(
-          flex: 2,
+          flex: 3,
           child: TextFormField(
             key: key,
-            controller: _valueController,
+            //controller: _valueController,
             decoration: InputDecoration(
               labelText: title, // ラベル
-              hintText: 'Enter ' + title + ' here.', // 入力ヒント
+              hintText: 'Enter $title here.', // 入力ヒント
               suffixIcon: IconButton(
                 onPressed: () => {key.currentState!.reset()},
                 icon: const Icon(Icons.clear),
@@ -82,7 +82,7 @@ class _MyHomePageState extends State<MyHomePage> {
             validator: (value) {
               // _formKey.currentState.validate()でコールされる
               if (value!.isEmpty) {
-                return 'Please enter some number.'; // エラー表示のメッセージを返す
+                return 'Please enter some number in $title.'; // エラー表示のメッセージを返す
               }
               //formValue = value;
               return null; // 問題ない場合はnullを返す
