@@ -1,4 +1,3 @@
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -54,8 +53,42 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  _showDiarogFormat({required String showText}) {
+    return showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          title: const Text("ERROR!!"),
+          content: Text(showText),
+          actions: <Widget>[
+            // ボタン領域
+            TextButton(
+                child: const Text("OK"),
+                onPressed: () => Navigator.pop(context) // ダイアログを閉じる
+                ),
+          ],
+        );
+      },
+    );
+  }
+
+  int _getNumFromFieldValue({required GlobalKey<FormFieldState<String>> key}) {
+    int _num = 0;
+    try {
+      _num = int.parse(key.currentState!.value ?? '0');
+    } on FormatException {
+      _showDiarogFormat(showText: 'テキストフォームが空欄なので0が入りました!!');
+    } on Exception catch (e) {
+      // それ以外の例外
+      debugPrint('Unknown exception: $e');
+      _showDiarogFormat(showText: '不明なエラーが発生しました!!');
+    }
+    return _num;
+  }
+
   /*時間入力フォームの単品ウィジェット*/
-  Widget _numberFormField({required String title, required GlobalKey<FormFieldState<String>> key}) {
+  Widget _numberFormField(
+      {required String title, required GlobalKey<FormFieldState<String>> key}) {
     //final TextEditingController _valueController = TextEditingController(text: '2');
     return Row(
       children: [
@@ -141,7 +174,7 @@ class _MyHomePageState extends State<MyHomePage> {
             Expanded(
               flex: 1,
               child: Text(
-                '$_result',
+                '$_result sec.',
                 style: Theme.of(context).textTheme.headline4,
               ),
             ),
@@ -153,9 +186,9 @@ class _MyHomePageState extends State<MyHomePage> {
         onPressed: () => {
           debugPrint("FABをクリック"),
           _calcTimeToSec(
-            hour: int.parse(_hourKey.currentState!.value ?? '0'),
-            min: int.parse(_minKey.currentState!.value ?? '0'),
-            sec: int.parse(_secKey.currentState!.value ?? '0'),
+            hour: _getNumFromFieldValue(key: _hourKey),
+            min: _getNumFromFieldValue(key: _minKey),
+            sec: _getNumFromFieldValue(key: _secKey),
           ),
         },
         child: const Icon(Icons.refresh),
