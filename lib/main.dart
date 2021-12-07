@@ -29,10 +29,6 @@ class MyHomePage extends StatefulWidget {
 
 // MyHomePageクラスから継承
 class _MyHomePageState extends State<MyHomePage> {
-  final _hourController = TextEditingController();
-  final _minController = TextEditingController();
-  final _secController = TextEditingController();
-
   final _hourKey = GlobalKey<FormFieldState<String>>();
   final _minKey = GlobalKey<FormFieldState<String>>();
   final _secKey = GlobalKey<FormFieldState<String>>();
@@ -51,15 +47,16 @@ class _MyHomePageState extends State<MyHomePage> {
   /*全フィールドのクリア*/
   void _clearField() {
     setState(() {
-      _hourController.clear();
-      _minController.clear();
-      _secController.clear();
+      this._hourKey.currentState!.reset();
+      this._minKey.currentState!.reset();
+      this._secKey.currentState!.reset();
+      _result = 0;
     });
   }
 
   /*時間入力フォームの単品ウィジェット*/
-  Widget _numberFormField({required String title, Key? key}) {
-    //final _formKey = GlobalKey<FormFieldState<String>>();
+  Widget _numberFormField({required String title, required GlobalKey<FormFieldState<String>> key}) {
+    final TextEditingController _valueController = TextEditingController(text: '');
     return Row(
       children: [
         Expanded(
@@ -70,9 +67,14 @@ class _MyHomePageState extends State<MyHomePage> {
           flex: 2,
           child: TextFormField(
             key: key,
+            controller: _valueController,
             decoration: InputDecoration(
               labelText: title, // ラベル
               hintText: 'Enter ' + title + ' here.', // 入力ヒント
+              suffixIcon: IconButton(
+                onPressed: () => {key.currentState!.reset()},
+                icon: const Icon(Icons.clear),
+              ),
             ),
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -86,7 +88,6 @@ class _MyHomePageState extends State<MyHomePage> {
               return null; // 問題ない場合はnullを返す
             },
             onSaved: (value) => () {
-              // this._formKey.currentState.save()でコールされる
               debugPrint('$value');
             },
           ),
@@ -110,27 +111,21 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
+            const Expanded(
+              flex: 1,
+              child: Text('You have enter the times following field.:'),
             ),
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: _hour,
-                ),
-                Expanded(
-                  flex: 1,
-                  child: _min,
-                ),
-                Expanded(
-                  flex: 1,
-                  child: _sec,
-                ),
-              ],
+            Expanded(
+              flex: 1,
+              child: _hour,
             ),
-            Container(
-              height: 50,
+            Expanded(
+              flex: 1,
+              child: _min,
+            ),
+            Expanded(
+              flex: 1,
+              child: _sec,
             ),
             ElevatedButton(
               child: const Text('Clear'),
@@ -143,12 +138,12 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onPressed: _clearField,
             ),
-            Container(
-              height: 50,
-            ),
-            Text(
-              '$_result',
-              style: Theme.of(context).textTheme.headline4,
+            Expanded(
+              flex: 1,
+              child: Text(
+                '$_result',
+                style: Theme.of(context).textTheme.headline4,
+              ),
             ),
           ],
         ),
